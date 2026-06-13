@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amarena Sorvetes | Sorvete de Massa Ultra Cremoso & Sobremesas Premium</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Amarena Sorvetes em Passos-MG: sorvete de massa ultra cremoso, cardápio de inverno com sobremesas quentes, +40 sabores exclusivos, picolés e açaí. Peça pelo WhatsApp!">
+  <meta name="keywords" content="sorveteria passos mg, sorvete de massa cremoso, amarena sorvetes, cardápio de inverno, sorvete artesanal, taça gourmet, milkshake, açaí premium, picolé artesanal, brownie na chapa">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Amarena Sorvetes Passos-MG | Sorvete de Massa Cremoso & Cardápio de Inverno">
+  <meta property="og:description" content="Sorvete de massa ultra cremoso em Passos-MG. Cardápio de Inverno com sobremesas quentes. +40 sabores exclusivos.">
+  <meta property="og:image" content="assets/images/loja/topo.jpeg">
+  
+  <!-- Google Fonts — Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Estilos Premium -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Firebase Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       HEADER / NAVBAR PREMIUM
+       ═══════════════════════════════════════════════════════════════════ -->
+  <header id="main-header" class="header">
+    <div class="container header-container">
+      <a href="#" class="logo-container" id="logo-link">
+        <img src="assets/logo.png" alt="Amarena Logo" class="header-logo" onerror="this.style.display='none'">
+        <span class="logo-text">Amarena</span>
+        <span class="logo-dot">.</span>
+      </a>
+      
+      <nav class="navbar" id="main-navbar">
+        <a href="#hero" class="nav-link active" id="nav-home">Início</a>
+        <a href="#inverno" class="nav-link" id="nav-winter">Cardápio de Inverno</a>
+        <a href="#destaques" class="nav-link" id="nav-destaques">Destaques</a>
+        <a href="#cardapio" class="nav-link" id="nav-menu">Cardápio</a>
+        <a href="#galeria" class="nav-link" id="nav-gallery">Galeria</a>
+        <a href="#sobre" class="nav-link" id="nav-about">Sobre</a>
+        <a href="#contato" class="nav-link" id="nav-contact">Contato</a>
+      </nav>
+      
+      <div class="header-actions">
+        <button class="mobile-menu-toggle" id="menu-toggle-btn" aria-label="Menu móvel">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══════════════════════════════════════════════════════════════════
+         SEÇÃO CARDÁPIO DE INVERNO — Destaque Sazonal Especial (Topo)
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="inverno" class="winter-section-premium">
+      <div class="winter-overlay-bg"></div>
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag winter-tag"><i class="fa-solid fa-snowflake"></i> Temporada de Inverno</span>
+          <h2 class="section-title text-light">Cardápio de <span class="highlight-text-winter">Inverno Amarena</span></h2>
+          <p class="section-subtitle text-light-muted">Sobremesas quentes e bebidas aconchegantes preparadas para aquecer seus dias mais frios com nossa cremosidade artesanal única.</p>
+        </div>
+
+        <div class="winter-showcase-grid">
+          <!-- Item 1: Brownie na Chapa -->
+          <div class="winter-showcase-card">
+            <div class="winter-card-img-container">
+              <img src="assets/images/sobremesas/brounie-na-chapa -bom.jfif" alt="Brownie na Chapa" class="winter-card-img">
+              <span class="winter-card-badge">Mais Desejado 🔥</span>
+            </div>
+            <div class="winter-card-content">
+              <h3>Brownie na Chapa</h3>
+              <p>Brownie artesanal servido na chapa quente borbulhando com calda de chocolate meio amargo, acompanhado de gelato premium de creme e farofa crocante.</p>
+            </div>
+          </div>
+
+          <!-- Item 2: Grand Gâteau -->
+          <div class="winter-showcase-card">
+            <div class="winter-card-img-container">
+              <img src="assets/images/sobremesas/grand-gateu.jfif" alt="Grand Gâteau" class="winter-card-img">
+              <span class="winter-card-badge">Exclusivo 👑</span>
+            </div>
+            <div class="winter-card-content">
+              <h3>Grand Gâteau Chocolat</h3>
+              <p>Bolo vulcão quente de chocolate com recheio cremoso e escorrido, decorado com um picolé artesanal de creme e calda quente de chocolate belga.</p>
+            </div>
+          </div>
+
+          <!-- Item 3: Petit Gâteau -->
+          <div class="winter-showcase-card">
+            <div class="winter-card-img-container">
+              <img src="assets/images/sobremesas/2.jfif" alt="Petit Gâteau" class="winter-card-img">
+              <span class="winter-card-badge">Clássico ☕</span>
+            </div>
+            <div class="winter-card-content">
+              <h3>Petit Gâteau Clássico</h3>
+              <p>Bolo de chocolate artesanal assado na hora com recheio super cremoso e quente, acompanhado de uma bola de gelato italiano de creme.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="winter-footer-cta">
+          <div class="winter-cta-text">
+            <h3>Quer conhecer o cardápio de inverno completo?</h3>
+            <p>Baixe a versão em PDF com nossas bebidas quentes, fondues de chocolate belga e caldos especiais.</p>
+          </div>
+          <div class="winter-cta-actions">
+            <a href="assets/cardapio.pdf" download="Cardapio_Inverno_Amarena.pdf" class="btn btn-winter-download">
+              <i class="fa-solid fa-file-pdf"></i> Baixar Cardápio de Inverno (PDF)
+            </a>
+            <a href="#cardapio" class="btn btn-winter-explore" onclick="document.getElementById('filter-inverno').click()">
+              <i class="fa-solid fa-snowflake"></i> Ver no Cardápio Online
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         HERO SECTION — Impacto Cinematográfico
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="hero" class="hero-section">
+      <div class="hero-bg-image" style="background-image: url('assets/images/loja/frente-loja.jfif')"></div>
+      <div class="hero-bg-overlay"></div>
+      <div class="hero-particles"></div>
+      <div class="container hero-container">
+        <div class="hero-text-content">
+          <div class="badge" id="open-status-badge">Carregando status...</div>
+          <h1 class="hero-title">
+            <span class="hero-title-line hero-title-line-1">A arte do</span>
+            <span class="hero-title-line hero-title-line-2"><span class="highlight-text">Sorvete de Massa Ultra Cremoso</span></span>
+            <span class="hero-title-line hero-title-line-3">que derrete na boca</span>
+          </h1>
+          <p class="hero-description">
+            Cada sabor é uma obra-prima ultra cremosa, criada com ingredientes selecionados, receitas exclusivas e a textura perfeita. Descubra por que somos o sorvete favorito de quem ama qualidade de verdade.
+          </p>
+          <div class="hero-actions-container">
+            <a href="#cardapio" class="btn btn-primary btn-glow" id="btn-hero-menu">
+              <i class="fa-solid fa-ice-cream"></i> Explorar Cardápio
+            </a>
+            <a href="#destaques" class="btn btn-secondary btn-shine" id="btn-hero-app">
+              <i class="fa-solid fa-crown"></i> Ver Destaques
+            </a>
+          </div>
+          <div class="hero-features">
+            <div class="feature-item">
+              <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-leaf"></i>
+              </div>
+              <div>
+                <span class="feature-title">100% Natural</span>
+                <span class="feature-sub">Sem conservantes</span>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-stroopwafel"></i>
+              </div>
+              <div>
+                <span class="feature-title">Receita Italiana</span>
+                <span class="feature-sub">Técnica autêntica</span>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-award"></i>
+              </div>
+              <div>
+                <span class="feature-title">+40 Sabores</span>
+                <span class="feature-sub">Exclusivos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image-showcase">
+          <div class="hero-image-wrapper">
+            <div class="hero-image-glow"></div>
+            <img src="assets/images/sobremesas/taça-kinder-dueno-editada.jfif" alt="Taça Premium Kinder Bueno - Amarena Sorvetes" class="hero-main-img">
+            <div class="hero-card-floating card-1">
+              <i class="fa-solid fa-star"></i>
+              <div>
+                <h4>5.0</h4>
+                <p>Nota no Google</p>
+              </div>
+            </div>
+            <div class="hero-card-floating card-2">
+              <i class="fa-solid fa-fire"></i>
+              <div>
+                <h4>+2.000</h4>
+                <p>Clientes satisfeitos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll-indicator">
+        <span>Explore</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         DESTAQUES — Produtos Premium em Evidência
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="destaques" class="destaques-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fa-solid fa-crown"></i> Seleção do Chef</span>
+          <h2 class="section-title">Nossos <span class="highlight-text">Mais Desejados</span></h2>
+          <p class="section-subtitle">Os sabores que conquistaram o coração da cidade. Preparados com ingredientes nobres e técnica artesanal incomparável.</p>
+        </div>
+        
+        <div class="destaques-grid" id="destaques-grid">
+          <!-- Preenchido via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         SEÇÃO APP — Showcase Interativo
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="showcase" class="showcase-section">
+      <div class="container showcase-container">
+        <div class="showcase-visual">
+          <div class="smartphone-frame">
+            <div class="phone-speaker"></div>
+            <div class="phone-screen-container">
+              <div class="phone-notch">
+                <div class="notch-camera"></div>
+                <div class="notch-sensor"></div>
+              </div>
+              <div class="phone-status-bar">
+                <span class="phone-time" id="phone-time-display">12:00</span>
+                <div class="phone-icons">
+                  <i class="fa-solid fa-signal"></i>
+                  <i class="fa-solid fa-wifi"></i>
+                  <i class="fa-solid fa-battery-three-quarters"></i>
+                </div>
+              </div>
+              
+              <!-- Iframe rodando o app real -->
+              <iframe src="https://amarena-passos.onrender.com/" class="phone-iframe" title="Amarena App Web" id="app-iframe"></iframe>
+              
+              <div class="phone-home-indicator"></div>
+            </div>
+            <div class="phone-shadow"></div>
+          </div>
+        </div>
+        <div class="showcase-info">
+          <span class="section-tag"><i class="fa-solid fa-mobile-screen-button"></i> Tecnologia & Praticidade</span>
+          <h2 class="section-title">Peça pelo nosso <span class="highlight-text">Aplicativo Web</span></h2>
+          <p class="section-description">
+            Uma experiência digital pensada em cada detalhe. Faça pedidos, acompanhe promoções exclusivas e acumule pontos no programa de fidelidade — tudo sem instalar nada.
+          </p>
+          <div class="showcase-steps">
+            <div class="step-card">
+              <div class="step-num">1</div>
+              <div class="step-text">
+                <h3>Navegue Interativamente</h3>
+                <p>Teste o simulador ao lado e veja a experiência exata do aplicativo.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">2</div>
+              <div class="step-text">
+                <h3>Zero Instalação</h3>
+                <p>Funciona direto no navegador do seu celular, rápido e seguro.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">3</div>
+              <div class="step-text">
+                <h3>Acesso Instantâneo</h3>
+                <p>Adicione à tela inicial e peça em apenas dois toques.</p>
+              </div>
+            </div>
+          </div>
+          <div class="showcase-buttons">
+            <a href="https://amarena-passos.onrender.com/" target="_blank" class="btn btn-primary btn-glow" id="btn-open-app-external">
+              <i class="fa-solid fa-up-right-from-square"></i> Abrir em Tela Cheia
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         CARDÁPIO INTERATIVO — Experiência de Compra Premium
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="cardapio" class="cardapio-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fa-solid fa-utensils"></i> Cardápio Completo</span>
+          <h2 class="section-title">Escolha sua <span class="highlight-text">Felicidade</span></h2>
+          <p class="section-subtitle">+40 sabores artesanais esperando por você. Cada um, uma experiência única de sabor e textura.</p>
+        </div>
+
+        <!-- Filtros e Busca -->
+        <div class="cardapio-controls">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="search-input" placeholder="Buscar sorvete, taça, picolé...">
+          </div>
+          <div class="category-filters" id="category-filters-container">
+            <button class="category-btn active" data-category="Todos" id="filter-all">
+              <i class="fa-solid fa-border-all"></i> Todos
+            </button>
+            <button class="category-btn" data-category="Especial de Inverno" id="filter-inverno">
+              <i class="fa-solid fa-snowflake"></i> Especial de Inverno
+            </button>
+            <button class="category-btn" data-category="Sorvetes" id="filter-sorvetes">
+              <i class="fa-solid fa-ice-cream"></i> Sorvetes
+            </button>
+            <button class="category-btn" data-category="Picolés" id="filter-picoles">
+              <i class="fa-solid fa-candy-cane"></i> Picolés
+            </button>
+            <button class="category-btn" data-category="Taças & Sundaes" id="filter-tacas">
+              <i class="fa-solid fa-wine-glass"></i> Taças & Sobremesas
+            </button>
+            <button class="category-btn" data-category="Milkshakes" id="filter-milkshakes">
+              <i class="fa-solid fa-blender"></i> Milkshakes
+            </button>
+            <button class="category-btn" data-category="Açaí" id="filter-acai">
+              <i class="fa-solid fa-bowl-food"></i> Açaí
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid de Itens -->
+        <div class="menu-grid" id="menu-grid">
+          <!-- Carregado via Javascript -->
+          <div class="menu-loading-spinner">
+            <i class="fa-solid fa-spinner fa-spin"></i> Carregando deliciosos sabores...
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         GALERIA DE FOTOS — Visual Cinematográfico
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="galeria" class="gallery-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fa-solid fa-camera"></i> Nossa Galeria</span>
+          <h2 class="section-title">Momentos <span class="highlight-text">Deliciosos</span></h2>
+          <p class="section-subtitle">Cada imagem conta a história do nosso cuidado artesanal. Fotos reais dos nossos produtos.</p>
+        </div>
+        
+        <div class="gallery-masonry">
+          <div class="gallery-item gallery-item-tall">
+            <img src="assets/images/sobremesas/taça-laka-oero.jfif" alt="Taça Laka com Oreo" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Taça Laka Oreo</h4>
+              <p>Chocolate branco com biscoitos premium</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/images/drawable/brigadeiro.jpg" alt="Sorvete de Brigadeiro" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Brigadeiro Gourmet</h4>
+              <p>Chocolate nobre 60% cacau</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/images/drawable/pistache.jpg" alt="Sorvete de Pistache" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Pistache Siciliano</h4>
+              <p>Importado da Sicília</p>
+            </div>
+          </div>
+          <div class="gallery-item gallery-item-wide">
+            <img src="assets/images/sobremesas/brounie-na-chapa -bom.jfif" alt="Brownie na Chapa" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Brownie na Chapa</h4>
+              <p>Servido quente com sorvete artesanal</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/images/drawable/morango_ninho.jpg" alt="Morango com Ninho" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Morango com Ninho</h4>
+              <p>O clássico irresistível</p>
+            </div>
+          </div>
+          <div class="gallery-item gallery-item-tall">
+            <img src="assets/images/sobremesas/taça-kinder-bueno.jfif" alt="Taça Kinder Bueno" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Taça Kinder Bueno</h4>
+              <p>Uma obra-prima de sabor</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/images/sobremesas/milkshake-premium.jpg" alt="Milkshake Premium de Chocolate" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Milkshake Premium</h4>
+              <p>Gelato belga e calda nobre</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/images/sobremesas/grand-gateu.jfif" alt="Grand Gâteau" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Grand Gâteau</h4>
+              <p>Vulcão de chocolate com sorvete</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/images/sobremesas/torta-sorvete-premium.jpg" alt="Torta de Sorvete Suprema" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Torta Suprema</h4>
+              <p>Camadas de gelato e ganache trufada</p>
+            </div>
+          </div>
+          <div class="gallery-item gallery-item-wide">
+            <img src="assets/images/loja/frente-loja.jfif" alt="Frente da Loja Amarena" loading="lazy">
+            <div class="gallery-overlay">
+              <h4>Nossa Loja</h4>
+              <p>Venha nos visitar!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         DEPOIMENTOS — Prova Social Premium
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section class="testimonials-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fa-solid fa-quote-left"></i> Depoimentos</span>
+          <h2 class="section-title">O que nossos clientes <span class="highlight-text">Dizem</span></h2>
+        </div>
+        
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="testimonial-text">"O melhor sorvete que já experimentei na vida! O pistache siciliano é simplesmente divino. Textura perfeita e sabor incomparável."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar"><i class="fa-solid fa-user"></i></div>
+              <div>
+                <h4>Maria Clara S.</h4>
+                <span>Cliente fiel há 2 anos</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card testimonial-featured">
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="testimonial-text">"A Taça Kinder Bueno mudou minha vida. Sério. Agora vou toda semana. O atendimento é incrível e os sabores são sempre frescos."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar"><i class="fa-solid fa-user"></i></div>
+              <div>
+                <h4>Carlos Eduardo R.</h4>
+                <span>Avaliação no Google ★★★★★</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="testimonial-text">"Pedi pelo delivery e chegou perfeito! Brownie na chapa quentinho com sorvete artesanal... uma experiência gastronômica em casa."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar"><i class="fa-solid fa-user"></i></div>
+              <div>
+                <h4>Juliana M.</h4>
+                <span>Via WhatsApp</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         SOBRE NÓS — Editorial Magazine Style
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="sobre" class="sobre-section">
+      <div class="container sobre-container">
+        <div class="sobre-content">
+          <span class="section-tag"><i class="fa-solid fa-gem"></i> Nossa Essência</span>
+          <h2 class="section-title">Tradição em fazer você <span class="highlight-text">Sorrir</span></h2>
+          <p class="sobre-text">
+            Fundada com o propósito de resgatar a verdadeira essência da produção italiana de gelatos, a Amarena combina ingredientes locais frescos com caldas e polpas importadas da Europa.
+          </p>
+          <p class="sobre-text">
+            Cada sabor de sorvete é balanceado de forma única para garantir menos açúcar, mais sabor e a textura cremosa perfeita. Oferecemos opções veganas, sem lactose e diets para que todos possam desfrutar de momentos doces.
+          </p>
+          <div class="sobre-metrics">
+            <div class="metric-box">
+              <span class="metric-number">40+</span>
+              <span class="metric-label">Sabores Criados</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-number">100%</span>
+              <span class="metric-label">Artesanal</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-number">2.000+</span>
+              <span class="metric-label">Clientes Felizes</span>
+            </div>
+          </div>
+        </div>
+        <div class="sobre-images">
+          <div class="grid-images">
+            <img src="assets/images/loja/frente-loja.jfif" alt="Frente da Loja Amarena" class="img-1">
+            <img src="assets/images/loja/topo.jpeg" alt="Interior da Loja Amarena" class="img-2">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         CONTATO & LOCALIZAÇÃO — Premium Dark Theme
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="contato" class="contato-section">
+      <div class="container contato-container">
+        <div class="contato-info">
+          <span class="section-tag"><i class="fa-solid fa-location-dot"></i> Fale Conosco</span>
+          <h2 class="section-title">Estamos esperando <span class="highlight-text">Você</span></h2>
+          
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+              <div>
+                <h3>Endereço</h3>
+                <p>Rua Dois de Novembro, 59 - Centro, Passos - MG</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+              <div>
+                <h3>Horário de Atendimento</h3>
+                <p>Todos os dias: 12:00 às 22:00</p>
+
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+              <div>
+                <h3>Telefone & WhatsApp</h3>
+                <p>(35) 9 9750-9179</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fa-solid fa-file-pdf"></i></div>
+              <div>
+                <h3>Cardápio Físico</h3>
+                <p>Prefere baixar? Faça o download da versão digital em PDF.</p>
+                <a href="assets/cardapio.pdf" download="Cardapio_Inverno_Amarena.pdf" class="btn-text-link" id="btn-download-pdf"><i class="fa-solid fa-snowflake"></i> Baixar Cardápio de Inverno (PDF)</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <a href="#" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        
+        <div class="contato-map">
+          <div class="map-placeholder">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <h3>Como Chegar</h3>
+            <p>Clique no botão abaixo para abrir a rota no Google Maps</p>
+            <a href="https://maps.google.com" target="_blank" class="btn btn-secondary" id="btn-open-maps">
+              <i class="fa-solid fa-route"></i> Abrir no Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       RODAPÉ PREMIUM
+       ═══════════════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-about">
+        <span class="logo-text">Amarena.</span>
+        <p>A melhor experiência de gelato artesanal. Sabores marcantes que despertam sorrisos diários.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>Links Rápidos</h3>
+        <a href="#hero">Início</a>
+        <a href="#destaques">Destaques</a>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#sobre">Sobre Nós</a>
+      </div>
+      <div class="footer-newsletter">
+        <h3>Fique por dentro</h3>
+        <p>Receba promoções e novidades diretamente no seu e-mail.</p>
+        <form class="newsletter-form" id="newsletter-form" onsubmit="event.preventDefault(); alert('Inscrição simulada com sucesso!');">
+          <input type="email" placeholder="Seu melhor e-mail" required aria-label="E-mail para newsletter">
+          <button type="submit" aria-label="Enviar"><i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Amarena Sorvetes. Todos os direitos reservados. Desenvolvido com <i class="fa-solid fa-heart" style="color: var(--primary);"></i></p>
+    </div>
+  </footer>
+
+  <!-- Carrinho de Compras removido para maior segurança nas operações pelo site principal -->
+
+  <!-- Script das Configurações do Firebase -->
+  <script src="firebase-config.js"></script>
+  <!-- Script com Mock Data de fallback -->
+  <script src="menu-data.js"></script>
+  <!-- Script de Controle Principal -->
+  <script src="app.js"></script>
+</body>
+</html>
