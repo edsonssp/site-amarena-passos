@@ -240,15 +240,47 @@ function renderMenu(items) {
 function setupFilters() {
   const searchInput = document.getElementById('search-input');
   const categoryBtns = document.querySelectorAll('.category-btn');
+  const picolesSubfiltersContainer = document.getElementById('picoles-subfilters-container');
+  const subCategoryBtns = document.querySelectorAll('.sub-category-btn');
+  
   let currentCategory = 'Todos';
+  let currentSubcategory = 'Todos';
   let searchQuery = '';
+
+  // Determinar a subcategoria do picolé dinamicamente
+  function getPicoleSubcategory(item) {
+    if (item.categoria !== 'Picolés') return null;
+    if (item.id.startsWith('mini-paleta')) return 'Gourmet';
+    
+    const frutasIds = [
+      'picole-melancia', 'picole-tangerina', 'picole-limao-fruta', 
+      'picole-uva', 'picole-kiwi', 'picole-groselha', 'picole-abacaxi-fruta'
+    ];
+    if (frutasIds.includes(item.id)) return 'Frutas';
+    
+    const leiteIds = [
+      'picole-chocolate', 'picole-morango-cremoso', 'picole-abacaxi-suico', 
+      'picole-mousse-maracuja', 'picole-coco-queimado', 'picole-limao-suico'
+    ];
+    if (leiteIds.includes(item.id)) return 'Leite';
+    
+    return 'Especial';
+  }
 
   function filterMenu() {
     const filtered = menuItems.filter(item => {
       const matchCategory = currentCategory === 'Todos' || item.categoria === currentCategory;
+      
+      // Filtro de subcategoria para picolés
+      let matchSubcategory = true;
+      if (currentCategory === 'Picolés' && currentSubcategory !== 'Todos') {
+        const itemSub = getPicoleSubcategory(item);
+        matchSubcategory = itemSub === currentSubcategory;
+      }
+      
       const matchSearch = item.nome.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           item.descricao.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchCategory && matchSearch;
+      return matchCategory && matchSubcategory && matchSearch;
     });
     renderMenu(filtered);
   }
@@ -259,12 +291,35 @@ function setupFilters() {
     filterMenu();
   });
 
-  // Evento de categorias
+  // Evento de categorias principais
   categoryBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       categoryBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentCategory = btn.getAttribute('data-category');
+      
+      // Mostrar/ocultar subfiltros de picolés
+      if (currentCategory === 'Picolés') {
+        picolesSubfiltersContainer.style.display = 'flex';
+      } else {
+        picolesSubfiltersContainer.style.display = 'none';
+        // Resetar filtro de subcategoria ao sair da categoria de picolés
+        currentSubcategory = 'Todos';
+        subCategoryBtns.forEach(b => b.classList.remove('active'));
+        const allSubBtn = Array.from(subCategoryBtns).find(b => b.getAttribute('data-subcategory') === 'Todos');
+        if (allSubBtn) allSubBtn.classList.add('active');
+      }
+      
+      filterMenu();
+    });
+  });
+
+  // Evento de subcategorias de picolés
+  subCategoryBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      subCategoryBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSubcategory = btn.getAttribute('data-subcategory');
       filterMenu();
     });
   });
