@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Estoque dos Freezers | Amarena Sorvetes</title>
+  
+  <!-- Google Fonts — Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Estilos Customizados Premium para o Estoque -->
+  <style>
+    :root {
+      --primary: #800c2f;
+      --primary-light: #a91c47;
+      --primary-dark: #5c0821;
+      --secondary: #d4a373;
+      --secondary-light: #faedcd;
+      --gold: #c9a96e;
+      --dark: #1a1215;
+      --dark-soft: #2d2226;
+      --light: #fffdf9;
+      --light-warm: #fef9f0;
+      --muted: #8d8084;
+      --muted-light: #b5aaa0;
+      --success: #2ec4b6;
+      --danger: #e63946;
+      
+      --font-title: 'Playfair Display', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+      
+      --shadow-sm: 0 2px 8px rgba(26, 18, 21, 0.05);
+      --shadow-md: 0 8px 20px rgba(26, 18, 21, 0.08);
+      --shadow-premium: 0 20px 40px rgba(128, 12, 47, 0.08);
+      
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --border-radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--light-warm);
+      color: var(--dark);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background-color: var(--primary-dark);
+      color: white;
+      padding: 20px 10px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-md);
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 15px;
+    }
+
+    .logo-link {
+      color: white;
+      text-decoration: none;
+      font-family: var(--font-title);
+      font-size: 1.6rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-link span {
+      color: var(--gold);
+    }
+
+    .back-home-btn {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-home-btn:hover {
+      background-color: var(--gold);
+      color: var(--primary-dark);
+      border-color: var(--gold);
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .intro {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-sm);
+      border-left: 5px solid var(--primary);
+    }
+
+    .intro h2 {
+      font-family: var(--font-title);
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .intro p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Tabs dos Freezers */
+    .freezer-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .freezer-tab {
+      background-color: white;
+      border: 2px solid transparent;
+      border-radius: var(--border-radius);
+      padding: 16px 8px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .freezer-tab.active {
+      border-color: var(--primary);
+      background-color: var(--primary-dark);
+      color: white;
+    }
+
+    .freezer-tab i {
+      font-size: 1.8rem;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .freezer-tab.active i {
+      color: var(--gold);
+    }
+
+    .freezer-tab .title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .freezer-tab .stats {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .freezer-tab.active .stats {
+      color: var(--secondary-light);
+    }
+
+    /* Grid Layout */
+    .freezer-layout {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 30px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 30px;
+    }
+
+    .layer-section {
+      margin-bottom: 35px;
+    }
+
+    .layer-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .layer-title {
+      font-family: var(--font-title);
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid var(--secondary-light);
+      padding-bottom: 8px;
+    }
+
+    .layer-title .badge {
+      font-size: 0.75rem;
+      font-family: var(--font-body);
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .badge-top {
+      background-color: #e3f2fd;
+      color: #1e88e5;
+    }
+
+    .badge-bottom {
+      background-color: #efebe9;
+      color: #5d4037;
+      border: 1px solid #d7ccc8;
+    }
+
+    .grid-slots {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 15px;
+    }
+
+    .slot-card {
+      background-color: var(--light-warm);
+      border: 2px dashed var(--muted-light);
+      border-radius: 12px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 12px;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .slot-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+      border-color: var(--primary);
+    }
+
+    .slot-card.filled {
+      background-color: white;
+      border-style: solid;
+      border-color: var(--primary-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .slot-card.filled:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .slot-number {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      align-self: flex-start;
+    }
+
+    .slot-card.filled .slot-number {
+      color: var(--primary);
+    }
+
+    .slot-flavor {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+      margin: auto 0;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: var(--dark);
+    }
+
+    .slot-card.filled.bottom-layer {
+      background-color: #fff9e6;
+      border-color: var(--gold);
+    }
+
+    .slot-card.filled.bottom-layer .slot-number {
+      color: var(--secondary-dark);
+    }
+
+    .slot-action {
+      font-size: 0.7rem;
+      color: var(--muted);
+      align-self: flex-end;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      padding: 15px;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: var(--border-radius);
+      width: 100%;
+      max-width: 550px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-premium);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      border-top: 5px solid var(--primary);
+    }
+
+    .modal.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title h3 {
+      font-family: var(--font-title);
+      color: var(--primary);
+      font-size: 1.3rem;
+    }
+
+    .modal-title p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .close-modal-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: var(--transition);
+    }
+
+    .close-modal-btn:hover {
+      color: var(--danger);
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 12px 12px 35px;
+      border: 1px solid var(--muted-light);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(128, 12, 47, 0.1);
+    }
+
+    .flavor-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 250px;
+      overflow-y: auto;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 5px;
+    }
+
+    .flavor-option {
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--light-warm);
+    }
+
+    .flavor-option:hover {
+      background-color: var(--secondary-light);
+      color: var(--primary-dark);
+    }
+
+    .flavor-option.selected {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .custom-flavor-form {
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .custom-flavor-form input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--muted-light);
+      border-radius: 8px;
+      outline: none;
+      font-family: var(--font-body);
+    }
+
+    .custom-flavor-form button {
+      background-color: var(--secondary-dark);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .custom-flavor-form button:hover {
+      background-color: var(--secondary);
+    }
+
+    .modal-footer {
+      padding: 15px 20px;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #c92a3a;
+    }
+
+    .btn-secondary {
+      background-color: #eee;
+      color: var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background-color: #ddd;
+    }
+
+    /* Resumo Geral de Estoque */
+    .summary-section {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 30px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 30px;
+    }
+
+    .summary-title {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .summary-item {
+      background-color: var(--light-warm);
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 4px solid var(--gold);
+    }
+
+    .summary-item .name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--dark-soft);
+    }
+
+    .summary-item .count {
+      background-color: var(--primary);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .custom-flavor-tag {
+      background-color: var(--secondary-light);
+      color: var(--primary-dark);
+      padding: 6px 12px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: 1px solid var(--secondary);
+    }
+    .custom-flavor-tag i {
+      cursor: pointer;
+      color: var(--danger);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .custom-flavor-tag i:hover {
+      transform: scale(1.2);
+    }
+
+    /* Controles Extras */
+    .backup-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn-backup {
+      background-color: white;
+      border: 1px solid var(--muted-light);
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-backup:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Responsividade */
+    @media (max-width: 992px) {
+      .grid-slots {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .freezer-tabs {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      
+      .grid-slots {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .slot-card {
+        padding: 8px;
+      }
+
+      .slot-flavor {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .freezer-tabs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid-slots {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="../index.html" class="logo-link">
+        Amarena <span>Estoque</span>
+      </a>
+      <a href="../index.html" class="back-home-btn">
+        <i class="fa-solid fa-arrow-left"></i> Voltar ao Menu
+      </a>
+    </div>
+  </header>
+
+  <!-- Container Principal -->
+  <main class="main-container">
+    
+    <!-- Introdução -->
+    <section class="intro">
+      <h2>Controle de Estoque dos Freezers</h2>
+      <p>Gerencie o estoque das caixas de sorvete. Cada freezer possui 12 caixas na parte superior (visíveis) e 12 caixas na parte inferior (estoque interno oculto). Clique em qualquer slot para definir o sabor.</p>
+    </section>
+
+    <!-- Abas dos Freezers -->
+    <section class="freezer-tabs" id="freezer-tabs-container">
+      <!-- Gerado via JS -->
+    </section>
+
+    <!-- Layout do Freezer Ativo -->
+    <section class="freezer-layout">
+      <!-- Camada de Cima -->
+      <div class="layer-section">
+        <h3 class="layer-title">
+          <i class="fa-solid fa-layer-group"></i> Camada Superior (Visível)
+          <span class="badge badge-top">Fácil Acesso</span>
+        </h3>
+        <div class="grid-slots" id="slots-top">
+          <!-- 12 Slots gerados via JS -->
+        </div>
+      </div>
+
+      <!-- Camada de Baixo -->
+      <div class="layer-section" style="margin-top: 40px;">
+        <h3 class="layer-title">
+          <i class="fa-solid fa-box-archive"></i> Camada Inferior (Estoque Oculto no Fundo)
+          <span class="badge badge-bottom">Estoque</span>
+        </h3>
+        <div class="grid-slots" id="slots-bottom">
+          <!-- 12 Slots gerados via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Resumo do Estoque (Fundo) -->
+    <section class="summary-section">
+      <h3 class="summary-title">
+        <i class="fa-solid fa-list-check"></i> Resumo do Estoque Físico (Fundo dos Freezers)
+      </h3>
+      <div class="summary-grid" id="summary-container">
+        <!-- Gerado via JS -->
+      </div>
+    </section>
+
+    <!-- Cadastro de Sabores -->
+    <section class="summary-section">
+      <h3 class="summary-title">
+        <i class="fa-solid fa-tags"></i> Cadastrar Sabores Personalizados
+      </h3>
+      <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 15px;">
+        Cadastre novos sabores aqui para que eles fiquem disponíveis para seleção nos freezers.
+      </p>
+      
+      <div class="custom-flavor-form" style="border: none; padding-top: 0; margin-bottom: 20px; display: flex; gap: 10px;">
+        <input type="text" id="direct-flavor-input" placeholder="Digite o nome do sabor (Ex: Sensação, Torta de Limão...)">
+        <button onclick="registerNewFlavorDirectly()" style="background-color: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: var(--transition);">Cadastrar</button>
+      </div>
+
+      <div id="custom-flavors-manager-list" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+        <!-- Sabores customizados listados aqui -->
+      </div>
+    </section>
+
+    <!-- Ações Extras / Backup -->
+    <section class="backup-actions">
+      <button class="btn-backup" onclick="exportData()">
+        <i class="fa-solid fa-download"></i> Exportar Backup (Salvar)
+      </button>
+      <button class="btn-backup" onclick="document.getElementById('import-file').click()">
+        <i class="fa-solid fa-upload"></i> Importar Backup
+      </button>
+      <input type="file" id="import-file" style="display: none;" onchange="importData(event)" accept=".json">
+      <button class="btn-backup" style="color: var(--danger); border-color: rgba(230,57,70,0.2);" onclick="resetAllData()">
+        <i class="fa-solid fa-trash-can"></i> Limpar Tudo
+      </button>
+    </section>
+
+  </main>
+
+  <!-- Modal de Seleção de Sabores -->
+  <div class="modal" id="flavor-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h3 id="modal-title-text">Selecionar Sabor</h3>
+          <p id="modal-subtitle-text">Defina o sorvete para esta posição</p>
+        </div>
+        <button class="close-modal-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Busca -->
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="flavor-search" placeholder="Buscar sabor (ex: Pistache...)" oninput="filterFlavors()">
+        </div>
+
+        <!-- Lista de Sabores -->
+        <div class="flavor-options-list" id="modal-flavors-list">
+          <!-- Inseridos via JS -->
+        </div>
+
+        <!-- Sabor Customizado -->
+        <div class="custom-flavor-form">
+          <input type="text" id="custom-flavor-input" placeholder="Novo Sabor personalizado...">
+          <button onclick="addCustomFlavor()">Adicionar</button>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" onclick="clearSlot()">Remover / Vazio</button>
+        <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carregar os Sabores do Menu Oficial -->
+  <script src="../menu-data.js"></script>
+  
+  <!-- Lógica da Aplicação -->
+  <script>
+    // Inicializar os dados na memória
+    let activeFreezer = 0; // 0 a 4 (representando Freezer 1 a 5)
+    let activeLayer = '';  // 'top' ou 'bottom'
+    let activeSlot = -1;   // 0 a 11
+
+    // Estrutura de dados padrão de estoque (5 freezers, cada um com 12 slots em cima e 12 embaixo)
+    let storeStock = JSON.parse(localStorage.getItem('amarena_freezer_stock'));
+    if (!storeStock) {
+      storeStock = Array.from({ length: 5 }, () => ({
+        top: Array(12).fill(null),
+        bottom: Array(12).fill(null)
+      }));
+    }
+
+    // Lista de Sabores Disponíveis
+    let availableFlavors = [];
+    if (typeof defaultMenu !== 'undefined') {
+      // Filtrar apenas categorias de sorvete de massa
+      availableFlavors = defaultMenu
+        .filter(item => item.categoria === 'Sorvetes' || item.categoria === 'Sorvete')
+        .map(item => item.nome);
+    }
+    
+    // Obter sabores customizados já salvos ou criar array vazio
+    let customFlavors = JSON.parse(localStorage.getItem('amarena_custom_flavors')) || [];
+
+    // Juntar os sabores oficiais e personalizados
+    function getAllFlavors() {
+      return [...new Set([...availableFlavors, ...customFlavors])].sort();
+    }
+
+    // Inicialização da Página
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTabs();
+      renderGrid();
+      renderSummary();
+      renderCustomFlavorsManager();
+    });
+
+    // Renderiza as abas dos freezers
+    function renderTabs() {
+      const container = document.getElementById('freezer-tabs-container');
+      container.innerHTML = '';
+      
+      for (let i = 0; i < 5; i++) {
+        // Calcular quantas caixas estão ocupadas no fundo (estoque)
+        const bottomOccupied = storeStock[i].bottom.filter(s => s !== null).length;
+        const topOccupied = storeStock[i].top.filter(s => s !== null).length;
+        
+        const tab = document.createElement('div');
+        tab.className = `freezer-tab ${i === activeFreezer ? 'active' : ''}`;
+        tab.onclick = () => selectFreezer(i);
+        
+        tab.innerHTML = `
+          <i class="fa-solid fa-snowflake"></i>
+          <span class="title">Freezer ${i + 1}</span>
+          <span class="stats">Baixo: ${bottomOccupied}/12</span>
+          <span class="stats">Cima: ${topOccupied}/12</span>
+        `;
+        container.appendChild(tab);
+      }
+    }
+
+    // Alterna o freezer ativo
+    function selectFreezer(index) {
+      activeFreezer = index;
+      renderTabs();
+      renderGrid();
+    }
+
+    // Renderiza o grid de caixas
+    function renderGrid() {
+      const gridTop = document.getElementById('slots-top');
+      const gridBottom = document.getElementById('slots-bottom');
+      
+      gridTop.innerHTML = '';
+      gridBottom.innerHTML = '';
+
+      const freezerData = storeStock[activeFreezer];
+
+      // Renderizar Camada Superior (Top)
+      freezerData.top.forEach((flavor, index) => {
+        const slot = document.createElement('div');
+        slot.className = `slot-card ${flavor ? 'filled' : ''}`;
+        slot.onclick = () => openModal('top', index);
+        
+        slot.innerHTML = `
+          <span class="slot-number">${index + 1}</span>
+          <span class="slot-flavor">${flavor || 'Vazio'}</span>
+          <span class="slot-action">${flavor ? 'Alterar' : 'Marcar'}</span>
+        `;
+        gridTop.appendChild(slot);
+      });
+
+      // Renderizar Camada Inferior (Bottom)
+      freezerData.bottom.forEach((flavor, index) => {
+        const slot = document.createElement('div');
+        slot.className = `slot-card bottom-layer ${flavor ? 'filled' : ''}`;
+        slot.onclick = () => openModal('bottom', index);
+        
+        slot.innerHTML = `
+          <span class="slot-number">${index + 1}</span>
+          <span class="slot-flavor">${flavor || 'Vazio'}</span>
+          <span class="slot-action">${flavor ? 'Alterar' : 'Marcar'}</span>
+        `;
+        gridBottom.appendChild(slot);
+      });
+    }
+
+    // Modal de Controle
+    function openModal(layer, index) {
+      activeLayer = layer;
+      activeSlot = index;
+      
+      const freezerNum = activeFreezer + 1;
+      const layerName = layer === 'top' ? 'Superior (Cima)' : 'Inferior (Baixo)';
+      const slotNum = index + 1;
+      
+      document.getElementById('modal-title-text').innerText = `Freezer ${freezerNum} • Slot ${slotNum}`;
+      document.getElementById('modal-subtitle-text').innerText = `Camada ${layerName}`;
+      document.getElementById('flavor-search').value = '';
+      
+      renderModalFlavors();
+      
+      const modal = document.getElementById('flavor-modal');
+      modal.classList.add('active');
+    }
+
+    // Fecha o modal
+    function closeModal() {
+      const modal = document.getElementById('flavor-modal');
+      modal.classList.remove('active');
+    }
+
+    // Renderiza a lista de sabores no modal
+    function renderModalFlavors() {
+      const container = document.getElementById('modal-flavors-list');
+      container.innerHTML = '';
+      
+      const searchVal = document.getElementById('flavor-search').value.toLowerCase();
+      const currentSelected = storeStock[activeFreezer][activeLayer][activeSlot];
+      
+      const filtered = getAllFlavors().filter(flavor => 
+        flavor.toLowerCase().includes(searchVal)
+      );
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="padding: 10px; color: var(--muted); text-align: center;">Nenhum sabor encontrado. Adicione um novo abaixo!</div>';
+        return;
+      }
+
+      filtered.forEach(flavor => {
+        const div = document.createElement('div');
+        div.className = `flavor-option ${flavor === currentSelected ? 'selected' : ''}`;
+        div.onclick = () => selectFlavor(flavor);
+        div.innerHTML = `
+          <span>${flavor}</span>
+          ${flavor === currentSelected ? '<i class="fa-solid fa-check"></i>' : ''}
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Filtra sabores no modal
+    function filterFlavors() {
+      renderModalFlavors();
+    }
+
+    // Selecionar sabor do modal
+    function selectFlavor(flavor) {
+      storeStock[activeFreezer][activeLayer][activeSlot] = flavor;
+      saveAndRefresh();
+      closeModal();
+    }
+
+    // Limpar / Deixar o slot vazio
+    function clearSlot() {
+      storeStock[activeFreezer][activeLayer][activeSlot] = null;
+      saveAndRefresh();
+      closeModal();
+    }
+
+    // Adiciona sabor customizado
+    function addCustomFlavor() {
+      const input = document.getElementById('custom-flavor-input');
+      const flavorName = input.value.trim();
+      
+      if (!flavorName) return;
+      
+      if (!customFlavors.includes(flavorName) && !availableFlavors.includes(flavorName)) {
+        customFlavors.push(flavorName);
+        localStorage.setItem('amarena_custom_flavors', JSON.stringify(customFlavors));
+      }
+      
+      input.value = '';
+      
+      // Seleciona automaticamente o novo sabor adicionado
+      selectFlavor(flavorName);
+    }
+
+    // Renderiza a lista de sabores personalizados cadastrados
+    function renderCustomFlavorsManager() {
+      const container = document.getElementById('custom-flavors-manager-list');
+      if (!container) return;
+      container.innerHTML = '';
+      
+      if (customFlavors.length === 0) {
+        container.innerHTML = '<span style="color: var(--muted); font-size: 0.9rem; font-style: italic;">Nenhum sabor personalizado cadastrado ainda.</span>';
+        return;
+      }
+      
+      customFlavors.forEach(flavor => {
+        const tag = document.createElement('div');
+        tag.className = 'custom-flavor-tag';
+        tag.innerHTML = `
+          <span>${flavor}</span>
+          <i class="fa-solid fa-xmark" title="Excluir Sabor" onclick="deleteCustomFlavorDirectly('${flavor.replace(/'/g, "\\'")}')"></i>
+        `;
+        container.appendChild(tag);
+      });
+    }
+
+    // Cadastro direto de novos sabores na listagem principal
+    function registerNewFlavorDirectly() {
+      const input = document.getElementById('direct-flavor-input');
+      const flavorName = input.value.trim();
+      
+      if (!flavorName) return;
+      
+      if (availableFlavors.includes(flavorName)) {
+        alert('Este sabor já existe no menu oficial!');
+        return;
+      }
+      
+      if (customFlavors.includes(flavorName)) {
+        alert('Este sabor já está cadastrado como personalizado!');
+        return;
+      }
+      
+      customFlavors.push(flavorName);
+      localStorage.setItem('amarena_custom_flavors', JSON.stringify(customFlavors));
+      input.value = '';
+      
+      renderCustomFlavorsManager();
+    }
+
+    // Exclusão direta de sabores personalizados
+    function deleteCustomFlavorDirectly(flavor) {
+      if (confirm(`Deseja mesmo excluir o sabor "${flavor}"? (Nota: slots que usam este sabor continuarão preenchidos, mas ele não aparecerá para novas seleções)`)) {
+        customFlavors = customFlavors.filter(f => f !== flavor);
+        localStorage.setItem('amarena_custom_flavors', JSON.stringify(customFlavors));
+        renderCustomFlavorsManager();
+      }
+    }
+
+    // Salvar no LocalStorage e recarregar componentes
+    function saveAndRefresh() {
+      localStorage.setItem('amarena_freezer_stock', JSON.stringify(storeStock));
+      renderTabs();
+      renderGrid();
+      renderSummary();
+    }
+
+    // Gera o resumo consolidado do estoque (apenas camada de baixo)
+    function renderSummary() {
+      const container = document.getElementById('summary-container');
+      container.innerHTML = '';
+      
+      const summary = {};
+      
+      // Contabilizar sabores na camada inferior (bottom) de todos os freezers
+      storeStock.forEach(freezer => {
+        freezer.bottom.forEach(flavor => {
+          if (flavor) {
+            summary[flavor] = (summary[flavor] || 0) + 1;
+          }
+        });
+      });
+
+      const items = Object.entries(summary).sort((a, b) => b[1] - a[1]);
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: var(--muted); border: 2px dashed var(--muted-light); border-radius: 12px;">
+            <i class="fa-solid fa-box-open" style="font-size: 2.5rem; margin-bottom: 10px; display: block; color: var(--muted-light);"></i>
+            Nenhuma caixa no estoque inferior no momento.
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach(([name, count]) => {
+        const item = document.createElement('div');
+        item.className = 'summary-item';
+        item.innerHTML = `
+          <span class="name">${name}</span>
+          <span class="count">${count} ${count === 1 ? 'caixa' : 'caixas'}</span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    // Exportar Backup JSON
+    function exportData() {
+      const backupData = {
+        storeStock,
+        customFlavors,
+        exportDate: new Date().toISOString()
+      };
+      
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `backup_estoque_amarena_${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Importar Backup JSON
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.storeStock && Array.isArray(data.storeStock)) {
+            storeStock = data.storeStock;
+            if (data.customFlavors && Array.isArray(data.customFlavors)) {
+              customFlavors = data.customFlavors;
+              localStorage.setItem('amarena_custom_flavors', JSON.stringify(customFlavors));
+            }
+            saveAndRefresh();
+            renderCustomFlavorsManager();
+            alert('Estoque importado com sucesso!');
+          } else {
+            alert('Formato de arquivo de backup inválido.');
+          }
+        } catch (err) {
+          alert('Erro ao ler o arquivo de backup.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Reseta todo o estoque
+    function resetAllData() {
+      if (confirm('Tem certeza que deseja limpar todo o estoque de todos os freezers? Isso não afetará a lista de sabores.')) {
+        storeStock = Array.from({ length: 5 }, () => ({
+          top: Array(12).fill(null),
+          bottom: Array(12).fill(null)
+        }));
+        saveAndRefresh();
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lotofácil Inteligente | Conferidor, Análises & Inteligência Estatística</title>
+  <meta name="description" content="Conferidor profissional e gerador inteligente de jogos para a Lotofácil com inteligência estatística integrada.">
+  
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Estilos Premium -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- ═══════════════════════════════════════════════════════════════════
+         CABECALHO DO APP
+         ═══════════════════════════════════════════════════════════════════ -->
+    <header>
+      <div class="logo-section">
+        <h1>Lotofácil <span class="logo-badge">Inteligente</span></h1>
+        <p>Análise estatística avançada e fechamento no seu navegador</p>
+      </div>
+      <div class="sync-status">
+        <span class="status-dot" id="db-status-dot"></span>
+        <span id="db-status-text">Inicializando banco...</span>
+        <button class="btn btn-secondary btn-sm" id="btn-sync-now" title="Sincronizar resultados agora">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         NAVEGAÇÃO POR ABAS
+         ═══════════════════════════════════════════════════════════════════ -->
+    <nav class="navigation-tabs">
+      <button class="tab-btn active" data-tab="tab-dashboard">
+        <i class="fa-solid fa-chart-pie"></i> Painel Geral
+      </button>
+      <button class="tab-btn" data-tab="tab-conferidor">
+        <i class="fa-solid fa-square-check"></i> Conferidor (18 Jogos)
+      </button>
+      <button class="tab-btn" data-tab="tab-analises">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Inteligência & Correlação
+      </button>
+      <button class="tab-btn" data-tab="tab-gerador">
+        <i class="fa-solid fa-microchip"></i> Gerador Inteligente
+      </button>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         ABA 1: PAINEL GERAL (DASHBOARD)
+         ═══════════════════════════════════════════════════════════════════ -->
+    <div id="tab-dashboard" class="tab-view active">
+      <div class="results-grid">
+        
+        <!-- Bloco Principal do Último Sorteio -->
+        <div>
+          <div class="glass-card">
+            <h2 class="card-title">
+              <i class="fa-solid fa-ticket"></i> Último Resultado Sorteado
+            </h2>
+            <div class="flex-space">
+              <h3 id="latest-concurso-title" style="font-family: var(--font-title); font-size: 1.4rem;">
+                Concurso ----
+              </h3>
+              <span id="latest-concurso-date" style="color: var(--text-muted); font-size: 0.9rem;">
+                Data: --/--/----
+              </span>
+            </div>
+            
+            <!-- Bolas Sorteadas -->
+            <div class="dezenas-container" id="latest-dezenas-container">
+              <!-- Renderizado dinamicamente -->
+              <span class="text-muted">Carregando sorteio...</span>
+            </div>
+
+            <!-- Estatísticas Rápidas do Sorteio -->
+            <div class="stats-grid">
+              <div class="stat-box">
+                <div class="stat-val" id="stat-pares">--</div>
+                <div class="stat-lbl">Pares</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="stat-impares">--</div>
+                <div class="stat-lbl">Ímpares</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="stat-primos">--</div>
+                <div class="stat-lbl">Primos</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="stat-soma">--</div>
+                <div class="stat-lbl">Soma</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="glass-card">
+            <h2 class="card-title">
+              <i class="fa-solid fa-chart-line"></i> Ciclo de Dezenas Atual
+            </h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+              O ciclo se fecha quando todas as 25 dezenas são sorteadas. Veja abaixo quais dezenas ainda faltam ser sorteadas no ciclo atual:
+            </p>
+            <div class="dezenas-container" id="cycle-missing-container">
+              <!-- Renderizado dinamicamente -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Histórico e Busca Lateral -->
+        <div class="glass-card">
+          <h2 class="card-title">
+            <i class="fa-solid fa-history"></i> Histórico de Sorteios
+          </h2>
+          
+          <!-- Filtro de Busca -->
+          <div class="form-group">
+            <input type="number" class="input-control" id="search-draw-input" placeholder="Pesquisar Concurso Ex: 3150">
+          </div>
+          
+          <!-- Lista Scrolável -->
+          <div class="history-scroll-box" id="history-list-container">
+            <!-- Renderizado dinamicamente -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         ABA 2: CONFERIDOR DE APOSTAS (18 JOGOS)
+         ═══════════════════════════════════════════════════════════════════ -->
+    <div id="tab-conferidor" class="tab-view">
+      <div class="glass-card">
+        <div class="flex-space mb-3">
+          <h2 class="card-title" style="margin-bottom:0; border-bottom:none; padding-bottom:0;">
+            <i class="fa-solid fa-calculator"></i> Conferência de Apostas
+          </h2>
+          <div class="flex-space gap-2" style="align-items: center; flex-wrap: wrap;">
+            <label for="conferidor-concurso-select" style="margin-bottom:0; font-size:0.85rem; white-space:nowrap;"><i class="fa-solid fa-filter"></i> Concurso:</label>
+            <select class="input-control" id="conferidor-concurso-select" style="max-width: 220px; padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+              <!-- Carregado via JS -->
+            </select>
+            <button class="btn btn-secondary btn-sm" id="btn-clear-all-bets">
+              <i class="fa-solid fa-trash"></i> Limpar Tudo
+            </button>
+          </div>
+        </div>
+        
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+          Cadastre suas apostas (selecione de 15 a 20 números por jogo) para comparar em tempo real com o último resultado sorteado da Lotofácil.
+        </p>
+
+        <!-- Container das 18 Apostas -->
+        <div class="bets-container" id="bets-rows-wrapper">
+          <!-- Renderizado dinamicamente via JS (18 linhas) -->
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         ABA 3: INTELIGÊNCIA & CORRELAÇÃO
+         ═══════════════════════════════════════════════════════════════════ -->
+    <div id="tab-analises" class="tab-view">
+      <div class="results-grid">
+        
+        <!-- Co-ocorrência / Afinidade de Dezenas -->
+        <div class="glass-card">
+          <h2 class="card-title">
+            <i class="fa-solid fa-bolt"></i> Co-ocorrência & Afinidade de Dezenas
+          </h2>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            Escolha uma dezena base para analisar a probabilidade de outras dezenas saírem simultaneamente no mesmo concurso.
+          </p>
+
+          <div class="form-group" style="display: flex; gap: 0.75rem; align-items: center;">
+            <label for="cooccurrence-select" style="margin-bottom:0; white-space:nowrap;">Dezena de Origem:</label>
+            <select class="input-control" id="cooccurrence-select" style="max-width: 120px;">
+              <!-- 01 a 25 -->
+            </select>
+          </div>
+
+          <!-- Hipóteses -->
+          <h3 style="font-family: var(--font-title); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.75rem;">
+            Hipóteses de Jogo Baseadas na Dezena Escolhida
+          </h3>
+          <div id="hypotheses-wrapper">
+            <!-- Gerado dinamicamente -->
+          </div>
+
+          <!-- Estatísticas Detalhadas de afinidade -->
+          <h3 style="font-family: var(--font-title); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.75rem;">
+            Top 8 Dezenas que Mais Saem Juntas:
+          </h3>
+          <div class="correlated-list" id="correlated-list-wrapper">
+            <!-- Gerado dinamicamente -->
+          </div>
+        </div>
+
+        <!-- Concursos Similares e Variação -->
+        <div class="glass-card">
+          <h2 class="card-title">
+            <i class="fa-solid fa-code-compare"></i> Concursos Mais Similares ao Último
+          </h2>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            Jogos históricos que compartilham 12 ou mais dezenas com o último concurso. Analise as dezenas que restaram para simular tendências de sorteio.
+          </p>
+
+          <div class="history-scroll-box" id="similar-draws-wrapper">
+            <!-- Renderizado dinamicamente -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         ABA 4: GERADOR INTELIGENTE
+         ═══════════════════════════════════════════════════════════════════ -->
+    <div id="tab-gerador" class="tab-view">
+      <div class="results-grid">
+        
+        <!-- Configuração de Filtros -->
+        <div class="glass-card">
+          <h2 class="card-title">
+            <i class="fa-solid fa-sliders"></i> Ajustar Filtros Estatísticos
+          </h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Defina faixas com base na distribuição estatística de maior probabilidade histórica da Lotofácil.
+          </p>
+
+          <div class="form-group">
+            <label>Ímpares por Jogo (Faixa Ideal: 7 a 9)</label>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <input type="number" class="input-control" id="filter-min-impares" value="7" style="text-align:center;">
+              <span>a</span>
+              <input type="number" class="input-control" id="filter-max-impares" value="9" style="text-align:center;">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Primos por Jogo (Faixa Ideal: 5 a 6)</label>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <input type="number" class="input-control" id="filter-min-primos" value="5" style="text-align:center;">
+              <span>a</span>
+              <input type="number" class="input-control" id="filter-max-primos" value="6" style="text-align:center;">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Soma das Dezenas (Faixa Ideal: 180 a 220)</label>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <input type="number" class="input-control" id="filter-min-soma" value="180" style="text-align:center;">
+              <span>a</span>
+              <input type="number" class="input-control" id="filter-max-soma" value="220" style="text-align:center;">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Repetidos do Concurso Anterior (Faixa Ideal: 8 a 10)</label>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <input type="number" class="input-control" id="filter-min-repetidos" value="8" style="text-align:center;">
+              <span>a</span>
+              <input type="number" class="input-control" id="filter-max-repetidos" value="10" style="text-align:center;">
+            </div>
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:center; gap:0.5rem; margin-top:1.5rem;">
+            <input type="checkbox" id="filter-block-past" checked style="width:18px; height:18px; cursor:pointer;">
+            <label for="filter-block-past" style="margin-bottom:0; cursor:pointer;">Bloquear sequências já sorteadas na história</label>
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:center; gap:0.5rem; margin-top:0.5rem;">
+            <input type="checkbox" id="filter-block-last10" checked style="width:18px; height:18px; cursor:pointer;">
+            <label for="filter-block-last10" style="margin-bottom:0; cursor:pointer;">Bloquear jogos com >13 acertos nos 10 últimos concursos</label>
+          </div>
+
+          <button class="btn" id="btn-generate-game" style="width:100%; justify-content:center; margin-top:1.5rem;">
+            <i class="fa-solid fa-cogs"></i> Gerar Jogo Assertivo
+          </button>
+        </div>
+
+        <!-- Jogo Gerado e Retrospectiva -->
+        <div>
+          <div class="glass-card" id="generated-game-card" style="display:none;">
+            <h2 class="card-title">
+              <i class="fa-solid fa-check-double"></i> Sugestão de Jogo Gerada
+            </h2>
+            <div class="dezenas-container" id="generated-game-balls">
+              <!-- Renderizado via JS -->
+            </div>
+            
+            <div class="stats-grid">
+              <div class="stat-box">
+                <div class="stat-val" id="gen-stat-impares">--</div>
+                <div class="stat-lbl">Ímpares</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="gen-stat-primos">--</div>
+                <div class="stat-lbl">Primos</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="gen-stat-soma">--</div>
+                <div class="stat-lbl">Soma</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="gen-stat-repetidos">--</div>
+                <div class="stat-lbl">Repetidos</div>
+              </div>
+            </div>
+
+            <!-- Botão para enviar esse jogo para uma das apostas -->
+            <div style="margin-top: 1.5rem; display:flex; gap:0.5rem;">
+              <select class="input-control" id="select-bet-target" style="flex: 1;">
+                <!-- Populado dinamicamente via JS -->
+              </select>
+              <button class="btn" id="btn-send-to-bet">Enviar</button>
+            </div>
+          </div>
+
+          <div class="glass-card" id="retrospective-analysis-card" style="display:none;">
+            <h2 class="card-title">
+              <i class="fa-solid fa-history"></i> Desempenho Histórico Deste Jogo
+            </h2>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1rem;">
+              Veja quantas vezes essa exata combinação gerou premiações no histórico de sorteios da Lotofácil:
+            </p>
+            <div class="stats-grid">
+              <div class="stat-box">
+                <div class="stat-val" id="retro-11">0</div>
+                <div class="stat-lbl">11 acertos</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="retro-12">0</div>
+                <div class="stat-lbl">12 acertos</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="retro-13">0</div>
+                <div class="stat-lbl">13 acertos</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="retro-14">0</div>
+                <div class="stat-lbl">14 acertos</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="retro-15">0</div>
+                <div class="stat-lbl">15 acertos</div>
+              </div>
+            </div>
+
+            <div id="retro-history-list" style="margin-top:1.5rem; max-height:180px; overflow-y:auto; font-size:0.85rem;">
+              <!-- Detalhes de datas das premiações -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MODAL: REGISTRADOR / EDITOR DE JOGO
+       ═══════════════════════════════════════════════════════════════════ -->
+  <div id="modal-register-bet" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); justify-content:center; align-items:center; z-index:9999; padding:1rem;">
+    <div class="glass-card" style="max-width:400px; width:100%; margin-bottom:0;">
+      <h2 class="card-title">
+        <i class="fa-solid fa-pen"></i> Selecionar Dezenas
+      </h2>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
+        Selecione de **15 a 20 dezenas**. Dezenas marcadas em roxo serão salvas no jogo.
+      </p>
+
+      <div style="display:flex; justify-content:center; margin-bottom:1.25rem;">
+        <!-- Grid de 01 a 25 -->
+        <div class="dezena-select-grid" id="modal-grid-dezenas">
+          <!-- Gerado dinamicamente -->
+        </div>
+      </div>
+
+      <div class="flex-space mb-3" style="font-size:0.9rem;">
+        <span>Marcadas: <strong id="modal-selected-count" style="color:var(--accent-secondary);">0</strong> / 20</span>
+        <button class="btn btn-secondary btn-sm" id="modal-btn-clear">Limpar</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:1.5rem;">
+        <button class="btn btn-secondary" id="modal-btn-cancel">Cancelar</button>
+        <button class="btn" id="modal-btn-save">Salvar Jogo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MODAL: CONFERÊNCIA HISTÓRICA COMPLETA
+       ═══════════════════════════════════════════════════════════════════ -->
+  <div id="modal-retro-check" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); justify-content:center; align-items:center; z-index:9999; padding:1rem;">
+    <div class="glass-card" style="max-width:500px; width:100%; margin-bottom:0;">
+      <h2 class="card-title">
+        <i class="fa-solid fa-shield-halved"></i> Checagem Antiduplicidade
+      </h2>
+      
+      <!-- Status de Segurança (Verde se seguro, Vermelho se já sorteado) -->
+      <div id="retro-status-block" style="padding:1rem; border-radius:10px; margin-bottom:1.25rem; text-align:center; font-family:var(--font-title); font-weight:700;">
+        <!-- Injetado dinamicamente -->
+      </div>
+
+      <h3 style="font-family:var(--font-title); font-size:1rem; margin-bottom:0.75rem;">Total de Premiações no Histórico:</h3>
+      <div class="stats-grid" style="margin-bottom:1.5rem;">
+        <div class="stat-box">
+          <div class="stat-val" id="modal-retro-11">0</div>
+          <div class="stat-lbl">11 pts</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="modal-retro-12">0</div>
+          <div class="stat-lbl">12 pts</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="modal-retro-13">0</div>
+          <div class="stat-lbl">13 pts</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="modal-retro-14">0</div>
+          <div class="stat-lbl">14 pts</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="modal-retro-15">0</div>
+          <div class="stat-lbl">15 pts</div>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--font-title); font-size:1rem; margin-bottom:0.5rem;">Concursos com Acertos Altos (13+ pontos):</h3>
+      <div id="modal-retro-details-list" style="max-height:130px; overflow-y:auto; font-size:0.85rem; padding-right:0.5rem; margin-bottom:1rem;">
+        <!-- Injetado dinamicamente -->
+      </div>
+
+      <!-- Regra dos 10 Últimos Sorteios (Máximo 13 acertos) -->
+      <h3 style="font-family:var(--font-title); font-size:1rem; margin-bottom:0.5rem;"><i class="fa-solid fa-clock-rotate-left"></i> Afinidade com os 10 Últimos Sorteios:</h3>
+      <div id="modal-retro-last10-list" style="font-size:0.85rem; background:rgba(255, 255, 255, 0.02); border:1px solid var(--border-color); padding:0.75rem; border-radius:10px; margin-bottom:1.5rem; max-height:120px; overflow-y:auto;">
+        <!-- Injetado dinamicamente -->
+      </div>
+
+      <button class="btn btn-secondary" id="modal-retro-btn-close" style="width:100%; justify-content:center;">Fechar Checagem</button>
+    </div>
+  </div>
+
+  <!-- Importação dos Scripts -->
+  <script src="database.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

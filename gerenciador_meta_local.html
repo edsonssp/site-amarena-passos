@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Campanhas Meta Ads</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --panel-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-primary: #06b6d4; /* Cyan */
+            --accent-secondary: #8b5cf6; /* Violet */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: none;
+            border-color: var(--text-secondary);
+        }
+
+        .alert {
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .alert-info {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            color: #a5f3fc;
+            display: block;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #a7f3d0;
+        }
+
+        .console-panel {
+            background: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 250px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #38bdf8;
+        }
+
+        .console-log {
+            margin-bottom: 6px;
+            word-break: break-all;
+        }
+
+        .console-log.err {
+            color: var(--error);
+        }
+
+        .console-log.ok {
+            color: var(--success);
+        }
+
+        .flex-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gerenciador de Campanhas Meta</h1>
+            <p>Conecte seu token de acesso e configure sua campanha direto do navegador.</p>
+        </header>
+
+        <div class="alert alert-info" id="infoBox">
+            <strong>Instruções de Credenciais:</strong> Cole o token provisório ou de longa duração no campo abaixo. Use o botão "Buscar Contas" para encontrar sua Conta de Anúncios.
+        </div>
+
+        <div class="alert alert-error" id="errorBox"></div>
+        <div class="alert alert-success" id="successBox"></div>
+
+        <!-- CREDENCIAIS -->
+        <div class="section-title">🔑 1. Credenciais da API</div>
+        <div class="form-group">
+            <label for="accessToken">Token de Acesso (Access Token)</label>
+            <input type="text" id="accessToken" placeholder="Insira o token longo (começa com EAA...) ou o provisório fornecido" value="534d85a465bd3ee789a2dcaaf1ce66de">
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="appId">ID do Aplicativo (Opcional)</label>
+                <input type="text" id="appId" value="1966874557250899">
+            </div>
+            <div class="form-group">
+                <label for="adAccountSelect">Conta de Anúncios</label>
+                <div style="display: flex; gap: 10px;">
+                    <select id="adAccountSelect">
+                        <option value="">Aguardando busca de contas...</option>
+                    </select>
+                    <button class="btn btn-secondary" id="btnFetchAccounts" style="width: auto; white-space: nowrap;">Buscar Contas</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" id="manualAccountGroup">
+            <label for="manualAccountId">Ou insira o ID da Conta de Anúncios Manualmente (Ex: act_123456789)</label>
+            <input type="text" id="manualAccountId" placeholder="act_XXXXXXXXXXXX">
+        </div>
+
+        <!-- CONFIGURAÇÃO DA CAMPANHA -->
+        <div class="section-title">📢 2. Configurações da Nova Campanha</div>
+        <div class="form-group">
+            <label for="campaignName">Nome da Campanha</label>
+            <input type="text" id="campaignName" placeholder="Ex: Campanha Amarena - Vendas Agosto">
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="campaignObjective">Objetivo da Campanha</label>
+                <select id="campaignObjective">
+                    <option value="OUTCOME_TRAFFIC">Tráfego (TRAFFIC)</option>
+                    <option value="OUTCOME_LEADS">Cadastros (LEADS)</option>
+                    <option value="OUTCOME_SALES">Vendas (SALES)</option>
+                    <option value="OUTCOME_ENGAGEMENT">Engajamento (ENGAGEMENT)</option>
+                    <option value="OUTCOME_AWARENESS">Reconhecimento (AWARENESS)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="campaignBudget">Orçamento Diário (R$)</label>
+                <input type="text" id="campaignBudget" placeholder="Ex: 20.00" value="20.00">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="campaignStatus">Status Inicial</label>
+                <select id="campaignStatus">
+                    <option value="PAUSED">Pausada (Recomendado para revisão)</option>
+                    <option value="ACTIVE">Ativa (Lançar direto)</option>
+                </select>
+            </div>
+            <div class="form-group" style="display: flex; align-items: flex-end;">
+                <button class="btn" id="btnLaunchCampaign">🚀 Lançar Campanha na Meta</button>
+            </div>
+        </div>
+
+        <div class="section-title">💻 Terminal de Resposta da API</div>
+        <div class="console-panel" id="consoleOutput">
+            <div class="console-log">[Sistema] Painel inicializado. Aguardando suas ações.</div>
+        </div>
+    </div>
+
+    <script>
+        const btnFetchAccounts = document.getElementById('btnFetchAccounts');
+        const btnLaunchCampaign = document.getElementById('btnLaunchCampaign');
+        const accessTokenInput = document.getElementById('accessToken');
+        const adAccountSelect = document.getElementById('adAccountSelect');
+        const manualAccountId = document.getElementById('manualAccountId');
+        const consoleOutput = document.getElementById('consoleOutput');
+        const errorBox = document.getElementById('errorBox');
+        const successBox = document.getElementById('successBox');
+
+        function log(message, type = '') {
+            const div = document.createElement('div');
+            div.className = `console-log ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            consoleOutput.appendChild(div);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        function showError(msg) {
+            errorBox.textContent = msg;
+            errorBox.style.display = 'block';
+            successBox.style.display = 'none';
+        }
+
+        function showSuccess(msg) {
+            successBox.textContent = msg;
+            successBox.style.display = 'block';
+            errorBox.style.display = 'none';
+        }
+
+        function clearAlerts() {
+            errorBox.style.display = 'none';
+            successBox.style.display = 'none';
+        }
+
+        // 1. BUSCAR CONTAS DE ANÚNCIOS
+        btnFetchAccounts.addEventListener('click', async () => {
+            clearAlerts();
+            const token = accessTokenInput.value.trim();
+            if (!token) {
+                showError("Por favor, insira o Token de Acesso antes de buscar.");
+                return;
+            }
+
+            log("Buscando contas de anúncios associadas a este token...");
+            adAccountSelect.innerHTML = '<option value="">Carregando...</option>';
+
+            try {
+                // Endpoint para buscar contas de anúncios do usuário
+                const url = `https://graph.facebook.com/v19.0/me/adaccounts?fields=name,account_id&access_token=${encodeURIComponent(token)}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.error) {
+                    showError(`Erro da API: ${data.error.message}`);
+                    log(`Erro da API Meta: ${JSON.stringify(data.error)}`, 'err');
+                    adAccountSelect.innerHTML = '<option value="">Falha na autenticação</option>';
+                    return;
+                }
+
+                if (!data.data || data.data.length === 0) {
+                    showError("Nenhuma conta de anúncios encontrada para este token. Certifique-se de que a conta está vinculada.");
+                    log("Aviso: Nenhuma conta retornada pela API.", 'err');
+                    adAccountSelect.innerHTML = '<option value="">Nenhuma conta encontrada</option>';
+                    return;
+                }
+
+                adAccountSelect.innerHTML = '';
+                data.data.forEach(acc => {
+                    const option = document.createElement('option');
+                    option.value = `act_${acc.account_id}`;
+                    option.textContent = `${acc.name} (act_${acc.account_id})`;
+                    adAccountSelect.appendChild(option);
+                });
+
+                showSuccess("Contas de anúncios carregadas com sucesso!");
+                log(`Sucesso: ${data.data.length} conta(s) encontrada(s).`, 'ok');
+            } catch (err) {
+                showError(`Erro de conexão: ${err.message}`);
+                log(`Erro de rede: ${err.message}`, 'err');
+                adAccountSelect.innerHTML = '<option value="">Erro de conexão</option>';
+            }
+        });
+
+        // 2. CRIAR A CAMPANHA
+        btnLaunchCampaign.addEventListener('click', async () => {
+            clearAlerts();
+            const token = accessTokenInput.value.trim();
+            const selectedAccount = adAccountSelect.value;
+            const manualAccount = manualAccountId.value.trim();
+            const campaignName = document.getElementById('campaignName').value.trim();
+            const objective = document.getElementById('campaignObjective').value;
+            const budgetReais = parseFloat(document.getElementById('campaignBudget').value);
+            const status = document.getElementById('campaignStatus').value;
+
+            // Define qual conta de anúncio usar
+            const adAccountId = manualAccount || selectedAccount;
+
+            if (!token) {
+                showError("O Token de Acesso é obrigatório.");
+                return;
+            }
+            if (!adAccountId) {
+                showError("Selecione uma conta de anúncios ou insira o ID manualmente.");
+                return;
+            }
+            if (!campaignName) {
+                showError("Insira um nome para a campanha.");
+                return;
+            }
+            if (isNaN(budgetReais) || budgetReais <= 0) {
+                showError("Insira um orçamento diário válido (Ex: 20.00).");
+                return;
+            }
+
+            // Orçamento da Meta é enviado em centavos (Ex: R$ 20.00 = 2000)
+            const dailyBudgetCentavos = Math.round(budgetReais * 100);
+
+            log(`Iniciando criação da campanha "${campaignName}" na conta ${adAccountId}...`);
+
+            try {
+                // Endpoint para criar a campanha
+                const url = `https://graph.facebook.com/v19.0/${adAccountId}/campaigns`;
+                
+                const formData = new URLSearchParams();
+                formData.append('name', campaignName);
+                formData.append('objective', objective);
+                formData.append('daily_budget', dailyBudgetCentavos);
+                formData.append('status', status);
+                formData.append('special_ad_categories', '[]'); // Vazio se não for de categoria especial
+                formData.append('access_token', token);
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    showError(`Falha ao criar campanha: ${data.error.message}`);
+                    log(`Erro da API: ${JSON.stringify(data.error)}`, 'err');
+                    return;
+                }
+
+                showSuccess(`Campanha criada com sucesso! ID da Campanha: ${data.id}`);
+                log(`Sucesso! Campanha criada. ID: ${data.id}`, 'ok');
+            } catch (err) {
+                showError(`Erro de conexão ao criar campanha: ${err.message}`);
+                log(`Erro de rede: ${err.message}`, 'err');
+            }
+        });
+    </script>
+</body>
+</html>
