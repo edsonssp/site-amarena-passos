@@ -6,7 +6,7 @@
 // Estado global do aplicativo
 let menuItems = [];
 let cart = JSON.parse(localStorage.getItem('amarena_cart')) || [];
-const WHATSAPP_NUMBER = "5535997509179"; // (35) 9 9750-9179 - Passos/MG
+const WHATSAPP_NUMBER = "5535998471089"; // (35) 9 9847-1089 - Amarena Sorvetes Passos
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
