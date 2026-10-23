@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cupons para Sorteio - Cesta de Produtos - Amarena Sorvetes</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 8mm 6mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .coupon-table {
+      width: 100%;
+      height: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .coupon-table td {
+      border: 1px solid #000;
+      width: 33.333%;
+      height: 12.5%; /* 100% / 8 linhas */
+      padding: 5px 8px 6px 8px;
+      vertical-align: top;
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* Marca d'água do logotipo de fundo */
+    .bg-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 84%;
+      max-width: 88%;
+      object-fit: contain;
+      opacity: 0.22;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .coupon-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2; /* Fica por cima da logo para leitura e escrita perfeitas */
+    }
+
+    .coupon-header {
+      text-align: center;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .header-line1 {
+      font-size: 7.8pt;
+      font-weight: 700;
+      letter-spacing: -0.1px;
+    }
+
+    .header-line2 {
+      font-size: 8.5pt;
+      font-weight: 900;
+      margin-top: 1px;
+      letter-spacing: -0.1px;
+    }
+
+    .field-row {
+      display: flex;
+      align-items: flex-end;
+      width: 100%;
+      margin-top: 2px;
+    }
+
+    .field-label {
+      font-size: 7.8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-right: 4px;
+    }
+
+    .field-line {
+      flex: 1;
+      border-bottom: 1.2px solid #000;
+      height: 1px;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <table class="coupon-table">
+    <tbody>
+      <!-- 8 linhas x 3 colunas = 24 cupons -->
+      <!-- Linha 1 -->
+      <tr>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Linha 2 -->
+      <tr>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Linha 3 -->
+      <tr>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Linha 4 -->
+      <tr>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Linha 5 -->
+      <tr>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Linha 6 -->
+      <tr>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Linha 7 -->
+      <tr>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Linha 8 -->
+      <tr>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <img src="assets/logo.png" class="bg-logo" alt="Logo">
+          <div class="coupon-content">
+            <div class="coupon-header">
+              <div class="header-line1">PREENCHA ESTE CUPOM E CONCORRA</div>
+              <div class="header-line2">A VÁRIOS BRINDES</div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">NOME</span>
+              <div class="field-line"></div>
+            </div>
+            <div class="field-row">
+              <span class="field-label">CELULAR</span>
+              <div class="field-line"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://antigravity.google",
+  "name": "video-builder",
+  "description": "Transforma sequências de imagens e áudios da pasta midias em vídeos MP4 de forma automatizada.",
+  "version": "1.0.0",
+  "entrypoint": "python make_video.py",
+  "skills": [
+    {
+      "name": "gerar_video_de_imagens",
+      "description": "Cria um vídeo MP4 a partir de uma lista de imagens e adiciona uma música de fundo.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "duracao_por_imagem": {
+            "type": "number",
+            "description": "Tempo em segundos que cada imagem aparece."
+          },
+          "nome_audio": {
+            "type": "string",
+            "description": "Nome do arquivo de áudio dentro da pasta midias (ex: musica.mp3). Opcional."
+          }
+        }
+      }
+    }
+  ]
+}
